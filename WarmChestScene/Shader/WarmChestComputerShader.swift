@@ -15,8 +15,11 @@ class WarmChestComputerShader
     
     let vertexShader =
     """
-    uniform float amplitude = 2.0;
-    uniform float yScale = 0.05;
+    uniform float scaleY = 0.05;
+
+    uniform float noiseX = 0.01;
+    uniform float noiseY = 0.01;
+    
     uniform float PI = 3.1415926535897932384626433832795;
 
     // 2D Random
@@ -32,16 +35,17 @@ class WarmChestComputerShader
 
     #pragma body
     // apply y scale
-    _geometry.position.y = mix(0.0, _geometry.position.y, yScale);
+    _geometry.position.y = mix(0.0, _geometry.position.y, scaleY);
     
-    // apply ground noise
+    // apply ground noise y
     float dy = random(_geometry.position.xy);
     float phaseY = random(_geometry.position.xz);
-    _geometry.position.y += 0.02 * dy * noiseSine(u_time, PI, phaseY);
+    _geometry.position.y += noiseX * dy * noiseSine(u_time, PI, phaseY);
 
+    // apply ground noise x
     float dx = random(_geometry.position.xz);
     float phaseX = random(_geometry.position.yz);
-    _geometry.position.x += 0.02 * dx * noiseSine(u_time, PI, phaseX);
+    _geometry.position.x += noiseY * dx * noiseSine(u_time, PI, phaseX);
     """
     
     let fragmentShader =
@@ -70,10 +74,18 @@ class WarmChestComputerShader
         material.setValue(value, forKey: "mixLevel")
     }
     
-    public func setYScale(value : Float)
+    public func setScaleY(value : Float)
     {
-        material.setValue(value, forKey: "yScale")
+        material.setValue(value, forKey: "scaleY")
     }
     
+    public func setNoiseY(value : Float)
+    {
+        material.setValue(value, forKey: "noiseY")
+    }
     
+    public func setNoiseX(value : Float)
+    {
+        material.setValue(value, forKey: "noiseX")
+    }
 }
