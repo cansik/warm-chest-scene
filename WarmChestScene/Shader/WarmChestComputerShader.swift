@@ -37,24 +37,30 @@ class WarmChestComputerShader
     // apply y scale
     _geometry.position.y = mix(0.0, _geometry.position.y, scaleY);
     
-    // apply ground noise y
-    float dy = random(_geometry.position.xy);
-    float phaseY = random(_geometry.position.xz);
-    _geometry.position.y += noiseX * dy * noiseSine(u_time, PI, phaseY);
-
     // apply ground noise x
     float dx = random(_geometry.position.xz);
     float phaseX = random(_geometry.position.yz);
-    _geometry.position.x += noiseY * dx * noiseSine(u_time, PI, phaseX);
+    _geometry.position.x += noiseX * dx * noiseSine(u_time, PI, phaseX);
+
+    // apply ground noise y
+    float dy = random(_geometry.position.xy);
+    float phaseY = random(_geometry.position.xz);
+    _geometry.position.y += noiseY * dy * noiseSine(u_time, PI, phaseY);
     """
     
     let fragmentShader =
     """
-    uniform float mixLevel = 1.0;
-    
+    uniform float saturation = 0.0;
+    uniform float overlayColorLevel = 1.0;
+    uniform vec3 overlayColor = vec3(0.0, 0.0, 0.0);
+
     #pragma body
+    // apply gray
     vec3 gray = vec3(dot(vec3(0.3, 0.59, 0.11), _output.color.rgb));
-    _output.color = mix(_output.color, vec4(gray, 1.0), sin(mixLevel));
+    _output.color = mix(vec4(gray, 1.0), _output.color, saturation);
+
+    // fadeout level
+    _output.color = mix(_output.color, vec4(overlayColor, 1.0), overlayColorLevel);
     """
     
     public init(material : SCNMaterial) {
@@ -69,9 +75,19 @@ class WarmChestComputerShader
         ];
     }
     
-    public func setMixLevel(value : Float)
+    public func setSaturation(value : Float)
     {
-        material.setValue(value, forKey: "mixLevel")
+        material.setValue(value, forKey: "saturation")
+    }
+    
+    public func setOverlayColorLevel(value : Float)
+    {
+        material.setValue(value, forKey: "overlayColorLevel")
+    }
+    
+    public func setOverlayColor(value : SCNVector3)
+    {
+        material.setValue(value, forKey: "overlayColor")
     }
     
     public func setScaleY(value : Float)

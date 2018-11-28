@@ -119,7 +119,7 @@ import SceneKit
             bytesPerIndex: MemoryLayout<Int>.size
         )
         
-        elements.maximumPointScreenSpaceRadius = 5.0
+        elements.maximumPointScreenSpaceRadius = 7.0
         elements.minimumPointScreenSpaceRadius = 1.0
         elements.pointSize = 2.0
         

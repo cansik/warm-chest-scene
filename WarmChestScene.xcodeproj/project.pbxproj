@@ -19,6 +19,8 @@
 		AB506CFF21AEE09800EF1B64 /* forest-blk360.ply in Resources */ = {isa = PBXBuildFile; fileRef = AB506CFE21AEE09800EF1B64 /* forest-blk360.ply */; };
 		AB506D0421AEE67200EF1B64 /* WarmChestComputerShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB506D0321AEE67200EF1B64 /* WarmChestComputerShader.swift */; };
 		AB506D0821AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB506D0721AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav */; };
+		AB506D0B21AF2D1200EF1B64 /* WarmChestAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB506D0A21AF2D1200EF1B64 /* WarmChestAnimation.swift */; };
+		AB506D0D21AF34CE00EF1B64 /* Lerp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB506D0C21AF34CE00EF1B64 /* Lerp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +39,8 @@
 		AB506CFE21AEE09800EF1B64 /* forest-blk360.ply */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "forest-blk360.ply"; sourceTree = "<group>"; };
 		AB506D0321AEE67200EF1B64 /* WarmChestComputerShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmChestComputerShader.swift; sourceTree = "<group>"; };
 		AB506D0721AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav"; sourceTree = "<group>"; };
+		AB506D0A21AF2D1200EF1B64 /* WarmChestAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmChestAnimation.swift; sourceTree = "<group>"; };
+		AB506D0C21AF34CE00EF1B64 /* Lerp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lerp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +73,7 @@
 		AB0F466021AEE02E0029079C /* WarmChestScene */ = {
 			isa = PBXGroup;
 			children = (
+				AB506D0921AF2CAE00EF1B64 /* Animation */,
 				AB506D0221AEE36B00EF1B64 /* Shader */,
 				AB506CF521AEE07D00EF1B64 /* PointCloud */,
 				AB506CF421AEE07400EF1B64 /* Util */,
@@ -98,6 +103,7 @@
 			children = (
 				AB506CFB21AEE08F00EF1B64 /* Event.swift */,
 				AB506CFA21AEE08F00EF1B64 /* Utils.swift */,
+				AB506D0C21AF34CE00EF1B64 /* Lerp.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -117,6 +123,14 @@
 				AB506D0321AEE67200EF1B64 /* WarmChestComputerShader.swift */,
 			);
 			path = Shader;
+			sourceTree = "<group>";
+		};
+		AB506D0921AF2CAE00EF1B64 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				AB506D0A21AF2D1200EF1B64 /* WarmChestAnimation.swift */,
+			);
+			path = Animation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -193,6 +207,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				AB506CFC21AEE08F00EF1B64 /* Utils.swift in Sources */,
+				AB506D0B21AF2D1200EF1B64 /* WarmChestAnimation.swift in Sources */,
+				AB506D0D21AF34CE00EF1B64 /* Lerp.swift in Sources */,
 				AB506CF921AEE08600EF1B64 /* PointCloudVertex.swift in Sources */,
 				AB0F466421AEE02E0029079C /* GameViewController.swift in Sources */,
 				AB506CF821AEE08600EF1B64 /* PointCloud.swift in Sources */,

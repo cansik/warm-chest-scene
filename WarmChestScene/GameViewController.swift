@@ -12,6 +12,7 @@ import QuartzCore
 class GameViewController: NSViewController {
     let pc = PointCloud()
     var computeShader = WarmChestComputerShader(material: SCNMaterial())
+    var animation : WarmChestAnimation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,9 +26,6 @@ class GameViewController: NSViewController {
         cameraNode.camera?.zNear = 0.005
         
         scene.rootNode.addChildNode(cameraNode)
-        
-        // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0.5, z: 10)
         
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
@@ -43,33 +41,13 @@ class GameViewController: NSViewController {
         cloud.scale = SCNVector3(10.0, 10.0, 10.0)
         scene.rootNode.addChildNode(cloud)
         
-        // animate camera to move forward
-        cameraNode.runAction(
-            SCNAction.repeatForever(
-                SCNAction.moveBy(x: 0.0, y: 0.0, z: -0.1, duration: 1.0)
-        ))
-        
-        // animate rotate camera
-        let mixChageTime = TimeInterval(5)
-        
-        scene.rootNode.addChildNode(setupAudio());
-        
-        cameraNode.runAction(
-            SCNAction.sequence([
-                SCNAction.customAction(duration: mixChageTime, action: { (node, value) in
-                    let normalizedTime = Float(Double(value) / mixChageTime);
-                    //self.computeShader.setScaleY(value: normalizedTime)
-                    print(normalizedTime)
-                }),
-                SCNAction.rotateBy(x: 0.0, y: 0.0, z: 3.14, duration: 5.0),
-                SCNAction.rotateBy(x: 0.0, y: 0.0, z: -3.14, duration: 5.0),
-                ])
-        )
-        
         // shaders
         let material = cloud.geometry?.firstMaterial!
         computeShader = WarmChestComputerShader(material: material!)
         computeShader.attachShader()
+        
+        animation = WarmChestAnimation(scene: scene, cameraNode: cameraNode, computeShader: computeShader, pointCloud: cloud)
+        animation!.setupAnimation()
         
         // retrieve the SCNView
         let scnView = self.view as! SCNView
@@ -78,10 +56,10 @@ class GameViewController: NSViewController {
         scnView.scene = scene
         
         // allows the user to manipulate the camera
-        scnView.allowsCameraControl = false
+        scnView.allowsCameraControl = true
         
         // show statistics such as fps and timing information
-        scnView.showsStatistics = false
+        scnView.showsStatistics = true
         
         // configure the view
         scnView.backgroundColor = NSColor.black
@@ -93,23 +71,13 @@ class GameViewController: NSViewController {
         scnView.gestureRecognizers = gestureRecognizers
     }
     
-    func setupAudio() -> SCNNode
-    {
-        let audioNode = SCNNode()
-        let audioSource = SCNAudioSource(fileNamed: "Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav")!
-        let audioPlayer = SCNAudioPlayer(source: audioSource)
-        
-        audioNode.addAudioPlayer(audioPlayer)
-        
-        let play = SCNAction.playAudio(audioSource, waitForCompletion: true)
-        audioNode.runAction(play)
-        return audioNode
-    }
-    
     @objc
     func handleClick(_ gestureRecognizer: NSGestureRecognizer) {
         // retrieve the SCNView
         let scnView = self.view as! SCNView
+        
+        animation?.runAnimation()
+        return
         
         // check what nodes are clicked
         let p = gestureRecognizer.location(in: scnView)
