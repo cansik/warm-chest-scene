@@ -76,7 +76,10 @@ class GameViewController: NSViewController {
         // retrieve the SCNView
         let scnView = self.view as! SCNView
         
-        animation?.runAnimation()
+        if(!animation!.running)
+        {
+            animation?.runAnimation()
+        }
         return
         
         // check what nodes are clicked

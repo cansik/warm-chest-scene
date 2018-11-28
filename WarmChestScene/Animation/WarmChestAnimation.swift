@@ -21,6 +21,8 @@ class WarmChestAnimation
     let noiseAnimationNode = SCNNode()
     let noiseAnimationNode2 = SCNNode()
     
+    var running = false
+    
     init(scene : SCNScene, cameraNode : SCNNode, computeShader : WarmChestComputerShader, pointCloud : SCNNode) {
         self.scene = scene
         self.cameraNode = cameraNode
@@ -43,6 +45,8 @@ class WarmChestAnimation
         
         // setup audio
         setupAudio()
+        
+        running = true
     }
     
     func setupCameraMovement()
@@ -56,10 +60,10 @@ class WarmChestAnimation
         // animate rotate camera
          cameraNode.runAction(
              SCNAction.sequence([
-                SCNAction.wait(duration: 45),
-                SCNAction.moveBy(x: 0.0, y: -0.4, z: 0.0, duration: 5)
-//             SCNAction.rotateBy(x: 0.0, y: 0.0, z: 3.14, duration: 5.0),
-//             SCNAction.rotateBy(x: 0.0, y: 0.0, z: -3.14, duration: 5.0),
+                SCNAction.wait(duration: 45.4),
+                SCNAction.moveBy(x: 0.0, y: -0.5, z: 0.0, duration: 0.1),
+                SCNAction.wait(duration: 14.5),
+                SCNAction.rotateBy(x: 0.0, y: 0.0, z: 2 * 3.14, duration: 30.0),
              ])
          )
     }
@@ -69,13 +73,14 @@ class WarmChestAnimation
         // color
         let fadeInTime = TimeInterval(20)
         let mixChangeTime = TimeInterval(23)
-        let flashTime = TimeInterval(0.1)
+        let flashTime = TimeInterval(0.3)
+        let fadeOutTime = TimeInterval(5)
         
         let flashAnimation = SCNAction.customAction(duration: flashTime, action: { (node, value) in
             let normalizedTime = Float(Double(value) / flashTime);
             self.computeShader.setOverlayColor(value: SCNVector3(1.0, 1.0, 1.0))
             self.computeShader.setOverlayColorLevel(value: lerp(normalizedTime, min: 1.0, max: 0.0))
-            self.changePointSize(size: lerp(normalizedTime, min: 1, max: 7))
+            self.changePointSize(size: lerp(normalizedTime, min: 20, max: 7))
         })
         
         scene.rootNode.addChildNode(colorAnimationNode)
@@ -83,6 +88,7 @@ class WarmChestAnimation
             SCNAction.sequence([
                 SCNAction.customAction(duration: fadeInTime, action: { (node, value) in
                     let normalizedTime = Float(Double(value) / fadeInTime);
+                    self.computeShader.setOverlayColor(value: SCNVector3(0.0, 0.0, 0.0))
                     self.computeShader.setOverlayColorLevel(value: lerp(normalizedTime, min: 1.0, max: 0.0))
                 }),
                 SCNAction.wait(duration: 1),
@@ -90,30 +96,39 @@ class WarmChestAnimation
                     let normalizedTime = Float(Double(value) / mixChangeTime);
                     self.computeShader.setSaturation(value: lerp(normalizedTime, min: 0.0, max: 1.0))
                 }),
-                SCNAction.wait(duration: 8),
+                SCNAction.wait(duration: 16),
                 flashAnimation,
-                SCNAction.wait(duration: 0.5),
-                flashAnimation,
-                SCNAction.wait(duration: 0.5),
-                flashAnimation,
+                SCNAction.wait(duration: 15),
+                SCNAction.customAction(duration: fadeOutTime, action: { (node, value) in
+                    let normalizedTime = Float(Double(value) / fadeOutTime);
+                    self.computeShader.setOverlayColor(value: SCNVector3(0.0, 0.0, 0.0))
+                    self.computeShader.setOverlayColorLevel(value: lerp(normalizedTime, min: 0.0, max: 1.0))
+                }),
                 ]))
         
         // scale Y
-        let scaleGrowTime = TimeInterval(0.5)
+        let scaleGrowTime = TimeInterval(0.4)
+        let finalGrowTime = TimeInterval(50)
         
         scene.rootNode.addChildNode(scaleYAnimationNode)
         scaleYAnimationNode.runAction(
             SCNAction.sequence([
-                SCNAction.wait(duration: 45),
+                SCNAction.wait(duration: 44.8),
                 SCNAction.customAction(duration: scaleGrowTime, action: { (node, value) in
                     let normalizedTime = Float(Double(value) / scaleGrowTime);
                     self.computeShader.setScaleY(value: lerp(normalizedTime, min: 0.05, max: 1.0))
-                })
+                }),
+                SCNAction.wait(duration: 30),
+                SCNAction.customAction(duration: finalGrowTime, action: { (node, value) in
+                    let normalizedTime = Float(Double(value) / finalGrowTime);
+                    self.computeShader.setScaleY(value: lerp(normalizedTime, min: 1.0, max: 4.0))
+                }),
                 ]))
         
         // noise
         let noiseGrowTime = TimeInterval(23.5)
         let noiseShrinkTime = TimeInterval(0.5)
+        let noiseFadeOutTime = TimeInterval(20)
         
         scene.rootNode.addChildNode(noiseAnimationNode)
         noiseAnimationNode.runAction(
@@ -125,8 +140,15 @@ class WarmChestAnimation
                 }),
                 SCNAction.customAction(duration: noiseShrinkTime, action: { (node, value) in
                     let normalizedTime = Float(Double(value) / noiseShrinkTime);
-                    self.computeShader.setNoiseY(value: lerp(normalizedTime, min: 1.0, max: 0.005))
-                    self.computeShader.setNoiseX(value: lerp(normalizedTime, min: 0.01, max: 0.005))
+                    self.computeShader.setNoiseY(value: lerp(normalizedTime, min: 1.0, max: 0.001))
+                    self.computeShader.setNoiseX(value: lerp(normalizedTime, min: 0.01, max: 0.003))
+                }),
+                SCNAction.wait(duration: 30),
+                SCNAction.customAction(duration: noiseFadeOutTime, action: { (node, value) in
+                    let normalizedTime = Float(Double(value) / noiseFadeOutTime);
+                    self.computeShader.setNoiseY(value: lerp(normalizedTime, min: 0.001, max: 0.00))
+                    self.computeShader.setNoiseX(value: lerp(normalizedTime, min: 0.003, max: 0.00))
+                    self.changePointSize(size: lerp(normalizedTime, min: 7, max: 0.1))
                 })
                 ]))
         
@@ -156,6 +178,16 @@ class WarmChestAnimation
         let play = SCNAction.playAudio(audioSource, waitForCompletion: true)
         audioNode.runAction(play)
         scene.rootNode.addChildNode(audioNode)
+        
+        let musicFadeOutTime = TimeInterval(10)
+        
+        audioNode.runAction(SCNAction.sequence([
+            SCNAction.wait(duration: 80),
+            SCNAction.customAction(duration: musicFadeOutTime, action: { (node, value) in
+                let normalizedTime = Float(Double(value) / musicFadeOutTime);
+                SCNAction.fadeOut(duration: musicFadeOutTime)
+            }),
+        ]))
     }
     
     func changePointSize(size : Float)
