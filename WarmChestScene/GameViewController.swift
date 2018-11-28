@@ -50,12 +50,14 @@ class GameViewController: NSViewController {
         ))
         
         // animate rotate camera
+        /*
         cameraNode.runAction(
             SCNAction.sequence([
                 SCNAction.rotateBy(x: 0.0, y: 0.0, z: 3.14, duration: 5.0),
                 SCNAction.rotateBy(x: 0.0, y: 0.0, z: -3.14, duration: 5.0)
                 ])
         )
+        */
         
         // shaders
         let material = cloud.geometry?.firstMaterial!

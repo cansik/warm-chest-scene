@@ -16,8 +16,9 @@ class WarmChestComputerShader
     let vertexShader =
     """
     uniform float amplitude = 0.1;
+    uniform float yScale = 0.1;
             
-    _geometry.position += (amplitude *_geometry.position.y * _geometry.position.x) * sin(1.0 * u_time);
+    _geometry.position.y = mix(0.0, _geometry.position.y, yScale);
     """
     
     let fragmentShader =
@@ -43,5 +44,10 @@ class WarmChestComputerShader
     public func setMixLevel(value : Float)
     {
         material.setValue(value, forKey: "mixLevel")
+    }
+    
+    public func setYScale(value : Float)
+    {
+        
     }
 }
