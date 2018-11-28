@@ -50,14 +50,19 @@ class GameViewController: NSViewController {
         ))
         
         // animate rotate camera
-        /*
+        let mixChageTime = TimeInterval(5)
+        
         cameraNode.runAction(
             SCNAction.sequence([
+                SCNAction.customAction(duration: mixChageTime, action: { (node, value) in
+                    let normalizedTime = Float(Double(value) / mixChageTime);
+                    self.computeShader.setMixLevel(value: normalizedTime)
+                    print(normalizedTime)
+                }),
                 SCNAction.rotateBy(x: 0.0, y: 0.0, z: 3.14, duration: 5.0),
-                SCNAction.rotateBy(x: 0.0, y: 0.0, z: -3.14, duration: 5.0)
+                SCNAction.rotateBy(x: 0.0, y: 0.0, z: -3.14, duration: 5.0),
                 ])
         )
-        */
         
         // shaders
         let material = cloud.geometry?.firstMaterial!
