@@ -15,9 +15,9 @@ class WarmChestComputerShader
     
     let vertexShader =
     """
-    //uniform vec2 u_resolution = vec2(1.0, 1.0);
     uniform float amplitude = 2.0;
     uniform float yScale = 0.05;
+    uniform float PI = 3.1415926535897932384626433832795;
 
     // 2D Random
     float random (in vec2 st) {
@@ -26,49 +26,27 @@ class WarmChestComputerShader
                      * 43758.5453123);
     }
 
-    // 2D Noise based on Morgan McGuire @morgan3d
-    // https://www.shadertoy.com/view/4dS3Wd
-    float noise (in vec2 st) {
-        vec2 i = floor(st);
-        vec2 f = fract(st);
-
-        // Four corners in 2D of a tile
-        float a = random(i);
-        float b = random(i + vec2(1.0, 0.0));
-        float c = random(i + vec2(0.0, 1.0));
-        float d = random(i + vec2(1.0, 1.0));
-
-        // Smooth Interpolation
-
-        // Cubic Hermine Curve.  Same as SmoothStep()
-        vec2 u = f*f*(3.0-2.0*f);
-        // u = smoothstep(0.,1.,f);
-
-        // Mix 4 coorners percentages
-        return mix(a, b, u.x) +
-                (c - a)* u.y * (1.0 - u.x) +
-                (d - b) * u.x * u.y;
+    float noiseSine(float x, float PI, float phase) {
+        return 0.5 * (1 + sin(2 * PI * x - (PI / phase)));
     }
-    
+
     #pragma body
     // apply y scale
     _geometry.position.y = mix(0.0, _geometry.position.y, yScale);
-    //_geometry.position += (amplitude * _geometry.position.y * _geometry.position.x) * sin(3.0 * u_time);
     
     // apply ground noise
-    vec2 st = _geometry.position.xy; // / u_resolution.xy;
-    vec2 pos = vec2(st*1.0);
+    float dy = random(_geometry.position.xy);
+    float phaseY = random(_geometry.position.xz);
+    _geometry.position.y += 0.02 * dy * noiseSine(u_time, PI, phaseY);
 
-    // Use the noise function
-    //float n = noise(pos);
-    float n = random(pos);
-
-    _geometry.position.y += n * sin(u_time);
+    float dx = random(_geometry.position.xz);
+    float phaseX = random(_geometry.position.yz);
+    _geometry.position.x += 0.02 * dx * noiseSine(u_time, PI, phaseX);
     """
     
     let fragmentShader =
     """
-    uniform float mixLevel = 0.0;
+    uniform float mixLevel = 1.0;
     
     #pragma body
     vec3 gray = vec3(dot(vec3(0.3, 0.59, 0.11), _output.color.rgb));
