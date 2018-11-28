@@ -18,6 +18,7 @@
 		AB506CFD21AEE08F00EF1B64 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB506CFB21AEE08F00EF1B64 /* Event.swift */; };
 		AB506CFF21AEE09800EF1B64 /* forest-blk360.ply in Resources */ = {isa = PBXBuildFile; fileRef = AB506CFE21AEE09800EF1B64 /* forest-blk360.ply */; };
 		AB506D0421AEE67200EF1B64 /* WarmChestComputerShader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB506D0321AEE67200EF1B64 /* WarmChestComputerShader.swift */; };
+		AB506D0821AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav in Resources */ = {isa = PBXBuildFile; fileRef = AB506D0721AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		AB506CFB21AEE08F00EF1B64 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		AB506CFE21AEE09800EF1B64 /* forest-blk360.ply */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "forest-blk360.ply"; sourceTree = "<group>"; };
 		AB506D0321AEE67200EF1B64 /* WarmChestComputerShader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmChestComputerShader.swift; sourceTree = "<group>"; };
+		AB506D0721AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +87,7 @@
 		AB506CF321AEE07000EF1B64 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AB506D0721AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav */,
 				AB506CFE21AEE09800EF1B64 /* forest-blk360.ply */,
 			);
 			path = Resources;
@@ -176,6 +179,7 @@
 			files = (
 				AB0F466B21AEE02F0029079C /* Main.storyboard in Resources */,
 				AB0F466821AEE02F0029079C /* Assets.xcassets in Resources */,
+				AB506D0821AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav in Resources */,
 				AB506CFF21AEE09800EF1B64 /* forest-blk360.ply in Resources */,
 				AB0F466621AEE02E0029079C /* art.scnassets in Resources */,
 			);

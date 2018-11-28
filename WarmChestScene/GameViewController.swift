@@ -52,11 +52,13 @@ class GameViewController: NSViewController {
         // animate rotate camera
         let mixChageTime = TimeInterval(5)
         
+        scene.rootNode.addChildNode(setupAudio());
+        
         cameraNode.runAction(
             SCNAction.sequence([
                 SCNAction.customAction(duration: mixChageTime, action: { (node, value) in
                     let normalizedTime = Float(Double(value) / mixChageTime);
-                    self.computeShader.setMixLevel(value: normalizedTime)
+                    //self.computeShader.setScaleY(value: normalizedTime)
                     print(normalizedTime)
                 }),
                 SCNAction.rotateBy(x: 0.0, y: 0.0, z: 3.14, duration: 5.0),
@@ -89,6 +91,19 @@ class GameViewController: NSViewController {
         var gestureRecognizers = scnView.gestureRecognizers
         gestureRecognizers.insert(clickGesture, at: 0)
         scnView.gestureRecognizers = gestureRecognizers
+    }
+    
+    func setupAudio() -> SCNNode
+    {
+        let audioNode = SCNNode()
+        let audioSource = SCNAudioSource(fileNamed: "Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav")!
+        let audioPlayer = SCNAudioPlayer(source: audioSource)
+        
+        audioNode.addAudioPlayer(audioPlayer)
+        
+        let play = SCNAction.playAudio(audioSource, waitForCompletion: true)
+        audioNode.runAction(play)
+        return audioNode
     }
     
     @objc
