@@ -27,7 +27,7 @@ class GameViewController: NSViewController {
         scene.rootNode.addChildNode(cameraNode)
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
+        cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
         
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
@@ -43,8 +43,19 @@ class GameViewController: NSViewController {
         cloud.scale = SCNVector3(10.0, 10.0, 10.0)
         scene.rootNode.addChildNode(cloud)
         
-        // animate the 3d object
-        //cloud.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0.01, z: 0, duration: 1)))
+        // animate camera to move forward
+        cameraNode.runAction(
+            SCNAction.repeatForever(
+                SCNAction.moveBy(x: 0.0, y: 0.0, z: -0.1, duration: 1.0)
+        ))
+        
+        // animate rotate camera
+        cameraNode.runAction(
+            SCNAction.sequence([
+                SCNAction.rotateBy(x: 0.0, y: 0.0, z: 3.14, duration: 5.0),
+                SCNAction.rotateBy(x: 0.0, y: 0.0, z: -3.14, duration: 5.0)
+                ])
+        )
         
         // shaders
         let material = cloud.geometry?.firstMaterial!
@@ -58,7 +69,7 @@ class GameViewController: NSViewController {
         scnView.scene = scene
         
         // allows the user to manipulate the camera
-        scnView.allowsCameraControl = true
+        scnView.allowsCameraControl = false
         
         // show statistics such as fps and timing information
         scnView.showsStatistics = false
