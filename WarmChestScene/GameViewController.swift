@@ -27,7 +27,7 @@ class GameViewController: NSViewController {
         scene.rootNode.addChildNode(cameraNode)
         
         // place the camera
-        cameraNode.position = SCNVector3(x: 0, y: 0, z: 10)
+        cameraNode.position = SCNVector3(x: 0, y: 0.5, z: 10)
         
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
