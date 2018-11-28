@@ -11,6 +11,7 @@ import QuartzCore
 
 class GameViewController: NSViewController {
     let pc = PointCloud()
+    var computeShader = WarmChestComputerShader(material: SCNMaterial())
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,21 +29,12 @@ class GameViewController: NSViewController {
         // place the camera
         cameraNode.position = SCNVector3(x: 0, y: 0, z: 15)
         
-        // create and add a light to the scene
-        let lightNode = SCNNode()
-        lightNode.light = SCNLight()
-        lightNode.light!.type = .omni
-        lightNode.position = SCNVector3(x: 0, y: 10, z: 10)
-        scene.rootNode.addChildNode(lightNode)
-        
         // create and add an ambient light to the scene
         let ambientLightNode = SCNNode()
         ambientLightNode.light = SCNLight()
         ambientLightNode.light!.type = .ambient
-        ambientLightNode.light!.color = NSColor.white
+        ambientLightNode.light!.color = NSColor.gray
         scene.rootNode.addChildNode(ambientLightNode)
-        
-        // retrieve the ship node
         
         // load pointcloud
         let pcs = Bundle.main.paths(forResourcesOfType: "ply", inDirectory: "")
@@ -52,15 +44,12 @@ class GameViewController: NSViewController {
         scene.rootNode.addChildNode(cloud)
         
         // animate the 3d object
-        cloud.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0.01, z: 0, duration: 1)))
+        //cloud.runAction(SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: 0.01, z: 0, duration: 1)))
+        
+        // shaders
         let material = cloud.geometry?.firstMaterial!
-        
-        material?.shaderModifiers = [SCNShaderModifierEntryPoint.fragment:
-            "uniform float mixLevel = 0.0;\n" +
-                "vec3 gray = vec3(dot(vec3(0.3, 0.59, 0.11), _output.color.rgb));\n" +
-            "_output.color = mix(_output.color, vec4(gray, 1.0), sin(u_time));" ];
-        //material?.setValue(0.0, forKey: "mixLevel")
-        
+        computeShader = WarmChestComputerShader(material: material!)
+        computeShader.attachShader()
         
         // retrieve the SCNView
         let scnView = self.view as! SCNView
@@ -72,7 +61,7 @@ class GameViewController: NSViewController {
         scnView.allowsCameraControl = true
         
         // show statistics such as fps and timing information
-        scnView.showsStatistics = true
+        scnView.showsStatistics = false
         
         // configure the view
         scnView.backgroundColor = NSColor.black
