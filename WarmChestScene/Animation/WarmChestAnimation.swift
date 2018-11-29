@@ -8,6 +8,7 @@
 
 import Foundation
 import SceneKit
+import AVKit
 
 class WarmChestAnimation
 {
@@ -185,7 +186,9 @@ class WarmChestAnimation
             SCNAction.wait(duration: 80),
             SCNAction.customAction(duration: musicFadeOutTime, action: { (node, value) in
                 let normalizedTime = Float(Double(value) / musicFadeOutTime);
-                SCNAction.fadeOut(duration: musicFadeOutTime)
+                if let mixer = audioPlayer.audioNode as? AVAudioMixerNode {
+                    mixer.volume = lerp(normalizedTime, min: 1.0, max: 0.0)
+                }
             }),
         ]))
     }

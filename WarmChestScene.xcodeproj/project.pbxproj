@@ -41,10 +41,18 @@
 		AB506D0721AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav"; sourceTree = "<group>"; };
 		AB506D0A21AF2D1200EF1B64 /* WarmChestAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WarmChestAnimation.swift; sourceTree = "<group>"; };
 		AB506D0C21AF34CE00EF1B64 /* Lerp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lerp.swift; sourceTree = "<group>"; };
+		AB506D1221AF507700EF1B64 /* WarmChestiOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WarmChestiOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		AB0F465B21AEE02E0029079C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB506D0F21AF507700EF1B64 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -66,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				AB0F465E21AEE02E0029079C /* WarmChestScene.app */,
+				AB506D1221AF507700EF1B64 /* WarmChestiOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,6 +162,23 @@
 			productReference = AB0F465E21AEE02E0029079C /* WarmChestScene.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AB506D1121AF507700EF1B64 /* WarmChestiOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AB506D2321AF507800EF1B64 /* Build configuration list for PBXNativeTarget "WarmChestiOS" */;
+			buildPhases = (
+				AB506D0E21AF507700EF1B64 /* Sources */,
+				AB506D0F21AF507700EF1B64 /* Frameworks */,
+				AB506D1021AF507700EF1B64 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WarmChestiOS;
+			productName = WarmChestiOS;
+			productReference = AB506D1221AF507700EF1B64 /* WarmChestiOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -164,6 +190,9 @@
 				ORGANIZATIONNAME = "Florian Bruggisser";
 				TargetAttributes = {
 					AB0F465D21AEE02E0029079C = {
+						CreatedOnToolsVersion = 10.1;
+					};
+					AB506D1121AF507700EF1B64 = {
 						CreatedOnToolsVersion = 10.1;
 					};
 				};
@@ -182,6 +211,7 @@
 			projectRoot = "";
 			targets = (
 				AB0F465D21AEE02E0029079C /* WarmChestScene */,
+				AB506D1121AF507700EF1B64 /* WarmChestiOS */,
 			);
 		};
 /* End PBXProject section */
@@ -196,6 +226,13 @@
 				AB506D0821AF091D00EF1B64 /* Yndusik - Warm Chest_44_16_Mark@Calyx_M220918.wav in Resources */,
 				AB506CFF21AEE09800EF1B64 /* forest-blk360.ply in Resources */,
 				AB0F466621AEE02E0029079C /* art.scnassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB506D1021AF507700EF1B64 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -215,6 +252,13 @@
 				AB506CFD21AEE08F00EF1B64 /* Event.swift in Sources */,
 				AB506D0421AEE67200EF1B64 /* WarmChestComputerShader.swift in Sources */,
 				AB0F466221AEE02E0029079C /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AB506D0E21AF507700EF1B64 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -385,6 +429,49 @@
 			};
 			name = Release;
 		};
+		AB506D2421AF507800EF1B64 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G9K4A7PDPV;
+				INFOPLIST_FILE = WarmChestiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cansik.WarmChestiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		AB506D2521AF507800EF1B64 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = G9K4A7PDPV;
+				INFOPLIST_FILE = WarmChestiOS/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = ch.cansik.WarmChestiOS;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -402,6 +489,15 @@
 			buildConfigurations = (
 				AB0F467121AEE02F0029079C /* Debug */,
 				AB0F467221AEE02F0029079C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AB506D2321AF507800EF1B64 /* Build configuration list for PBXNativeTarget "WarmChestiOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AB506D2421AF507800EF1B64 /* Debug */,
+				AB506D2521AF507800EF1B64 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
